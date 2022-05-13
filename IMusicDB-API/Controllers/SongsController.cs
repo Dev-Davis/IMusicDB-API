@@ -9,7 +9,8 @@ namespace IMusicDB_API.Controllers
     [ApiController]
     public class SongsController : ControllerBase
     {
-        private List<Song> songs = new List<Song>()
+        // set as static to see a single copy of this list throguh this controller
+        private static List<Song> songs = new List<Song>()
         {
             new Song() {Id = 0, Title = "We Gonna Make It", Language = "English"},
             new Song() {Id = 0, Title = "Win Or Lose", Language = "English"}
@@ -19,6 +20,13 @@ namespace IMusicDB_API.Controllers
         public IEnumerable<Song> Get()
         {
             return songs;
+        }
+
+        // add songs in Postman with POST request
+        [HttpPost]
+        public void Post(Song song)
+        {
+            songs.Add(song);
         }
     }
 }
