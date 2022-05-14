@@ -36,5 +36,11 @@ namespace IMusicDB_API.Controllers
         {
             songs[id] = song;
         }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            songs.RemoveAt(id);
+        }
     }
 }
