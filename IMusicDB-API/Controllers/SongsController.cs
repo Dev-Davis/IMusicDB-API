@@ -13,7 +13,8 @@ namespace IMusicDB_API.Controllers
         private static List<Song> songs = new List<Song>()
         {
             new Song() {Id = 0, Title = "We Gonna Make It", Language = "English"},
-            new Song() {Id = 0, Title = "Win Or Lose", Language = "English"}
+            new Song() {Id = 1, Title = "Win Or Lose", Language = "English"},
+            new Song() {Id = 2, Title = "We Cry Together", Language = "English"}
         };
 
         [HttpGet]
@@ -24,9 +25,16 @@ namespace IMusicDB_API.Controllers
 
         // add songs in Postman with POST request
         [HttpPost]
-        public void Post(Song song)
+        public void Post([FromBody] Song song)
         {
             songs.Add(song);
+        }
+
+        // has the id as an extra parameter and in the request to update a specific reecord from the database
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] Song song)
+        {
+            songs[id] = song;
         }
     }
 }
