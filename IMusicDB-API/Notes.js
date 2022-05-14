@@ -15,6 +15,8 @@ side takes the request and gives a respone through the pipeline */
 
 // Ceate a Post request in the controller. Since the method is not returning a specific type, the method can be void.
 
+// Create a Put request and add the id to the parameter of the controller and HttpPut to update the specified item in the list
+
 
 
 
