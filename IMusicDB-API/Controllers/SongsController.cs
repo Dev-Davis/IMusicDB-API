@@ -1,7 +1,9 @@
-﻿using IMusicDB_API.Models;
-using Microsoft.AspNetCore.Http;
+﻿using IMusicDB_API.Data;
+using IMusicDB_API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace IMusicDB_API.Controllers
 {
@@ -9,38 +11,43 @@ namespace IMusicDB_API.Controllers
     [ApiController]
     public class SongsController : ControllerBase
     {
-        // set as static to see a single copy of this list throguh this controller
-        private static List<Song> songs = new List<Song>()
+        private ApiDbContext _dbContext;
+        public SongsController(ApiDbContext dbContext)
         {
-            new Song() {Id = 0, Title = "We Gonna Make It", Language = "English"},
-            new Song() {Id = 1, Title = "Win Or Lose", Language = "English"},
-            new Song() {Id = 2, Title = "We Cry Together", Language = "English"}
-        };
+            _dbContext = dbContext;
+        }
 
+        // GET: api/<ValuesController>
         [HttpGet]
         public IEnumerable<Song> Get()
         {
-            return songs;
+            return _dbContext.Songs;
         }
 
-        // add songs in Postman with POST request
+        // GET api/<ValuesController>/5
+        [HttpGet("{id}")]
+        public Song Get(int id)
+        {
+            var song = _dbContext.Songs.Find(id);
+            return song;
+        }
+
+        // POST api/<ValuesController>
         [HttpPost]
-        public void Post([FromBody] Song song)
+        public void Post([FromBody] string value)
         {
-            songs.Add(song);
         }
 
-        // has the id as an extra parameter and in the request to update a specific reecord from the database
+        // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Song song)
+        public void Put(int id, [FromBody] string value)
         {
-            songs[id] = song;
         }
 
+        // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            songs.RemoveAt(id);
         }
     }
 }
